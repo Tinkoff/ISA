@@ -1,0 +1,118 @@
+{
+	"settings": {
+		"analysis": {
+			"filter": {
+				"hunspellRu": {
+					"type": "hunspell",
+					"ignore_case": "true",
+					"language": "ru_RU"
+				},
+				"hunspellEn": {
+					"type": "hunspell",
+					"ignore_case": "true",
+					"language": "en_US"
+				},
+				"synonymsRu": {
+					"type": "synonym_graph",
+					"synonyms_path": "solrSynonyms/ru_RU/synonyms.txt"
+				},
+				"synonymsAcronymsEn": {
+					"type": "synonym_graph",
+					"synonyms_path": "solrSynonymsAcronyms/en_US/synonymsAcronyms.txt"
+				},
+				"stopWordsRu": {
+					"type": "stop",
+					"stopwords": "_russian_"
+				},
+				"stopWordsEn": {
+					"type": "stop",
+					"stopwords": "_english_"
+				},
+				"shingleProducer": {
+					"type":	"shingle",
+                    "output_unigrams":  false   
+				}
+			},
+			"tokenizer": {
+				"standardExcludingDash": {
+					"type": "pattern",
+					"pattern": "[^\\wа-яёА-ЯЁ-]"
+				}
+			},
+			"analyzer": {
+				"hunspell": {
+					"tokenizer": "standard",
+					"filter": [
+						"lowercase",
+						"hunspellRu",
+						"stopWordsRu",
+						"hunspellEn",
+						"stopWordsEn"
+					]
+				},
+				"synonymsAcronyms": {
+					"tokenizer": "standardExcludingDash",
+					"filter": [
+						"lowercase",
+						"synonymsRu",
+						"synonymsAcronymsEn",
+						"hunspellRu",
+						"hunspellEn",
+						"stopWordsRu",
+						"stopWordsEn"
+					]
+				},
+				"standardWithStopwords": {
+					"tokenizer": "standard",
+					"filter": [
+						"lowercase",
+						"stopWordsRu",
+						"stopWordsEn"
+					]
+				},
+				"shingle": {
+                    "tokenizer": "standard",
+                    "filter": [
+                        "lowercase",
+                        "shingleProducer" 
+                    ]
+				}
+			}
+		}
+	},
+	"mappings": {
+		"doc": {
+			"properties": {
+				"id": {
+					"type": "text"
+				},
+				"link": {
+					"type": "text"
+				},
+				"title": {
+					"type": "text",
+					"analyzer": "hunspell",
+					"search_analyzer": "synonymsAcronyms",
+					"fields": {
+						"original": {
+							"type": "text",
+							"analyzer": "standardWithStopwords"
+						},
+						"shingles": {
+							"type": "text",
+							"analyzer": "shingle"
+						},
+						"stemming": {
+							"type": "text",
+							"analyzer": "hunspell"
+						}
+					}
+				},
+				"text": {
+					"type": "text",
+					"analyzer": "hunspell"
+				}
+			}
+		}
+	}
+}

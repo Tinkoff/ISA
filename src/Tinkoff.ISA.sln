@@ -1,0 +1,132 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.Domain", "Tinkoff.ISA.Domain\Tinkoff.ISA.Domain.csproj", "{2E43D3B2-66BE-49AE-8753-4928D6F224AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.AppLayer", "Tinkoff.ISA.AppLayer\Tinkoff.ISA.AppLayer.csproj", "{4D8FEF46-156B-4522-B6CF-975CF82D1C53}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.API", "Tinkoff.ISA.API\Tinkoff.ISA.API.csproj", "{56DD37E7-E1C8-4FBD-A65F-F10F23948E1A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.Scheduler", "Tinkoff.ISA.Scheduler\Tinkoff.ISA.Scheduler.csproj", "{A39B12A9-4928-41B2-965E-704C77C672D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.DAL", "Tinkoff.ISA.DAL\Tinkoff.ISA.DAL.csproj", "{5EBE7D30-BE55-46E5-ACA0-5B30CBD58E0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.Infrastructure", "Tinkoff.ISA.Infrastructure\Tinkoff.ISA.Infrastructure.csproj", "{1DAD7146-0051-4598-AD83-BACD1FF4B71C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3A4882C9-EEE9-4B71-8E5A-E25352CB530A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.AppLayer.UnitTests", "Tinkoff.ISA.AppLayer.UnitTests\Tinkoff.ISA.AppLayer.UnitTests.csproj", "{C1613F4B-CDAB-4A74-9756-F7D2481D4A8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.DAL.UnitTests", "Tinkoff.ISA.DAL.UnitTests\Tinkoff.ISA.DAL.UnitTests.csproj", "{78E4EE2E-D605-4D25-8C92-3E16AD0D462B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tinkoff.ISA.Scheduler.UnitTests", "Tinkoff.ISA.Scheduler.UnitTests\Tinkoff.ISA.Scheduler.UnitTests.csproj", "{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{0FA9C610-EB30-4529-A2CA-589F74EB79EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9517216F-AAFF-4100-8301-1952AAB4CA34}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\checkElastic.cmd = ..\scripts\checkElastic.cmd
+		..\scripts\createIndexesDocker.cmd = ..\scripts\createIndexesDocker.cmd
+		..\scripts\dev-docker.rebuild-and-run.cmd = ..\scripts\dev-docker.rebuild-and-run.cmd
+		..\scripts\dev.tests.cmd = ..\scripts\dev.tests.cmd
+		..\scripts\docker-clear-everything.cmd = ..\scripts\docker-clear-everything.cmd
+		..\scripts\start.cmd = ..\scripts\start.cmd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "elasticsearch", "elasticsearch", "{462E40B8-31D9-45B4-8256-7C767BC2BFC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "indexes", "indexes", "{79FA227A-1DC7-4E3B-B73C-BFA2208DCEBC}"
+	ProjectSection(SolutionItems) = preProject
+		..\AdditionalConfig\ElasticSearch\answersIndex.json = ..\AdditionalConfig\ElasticSearch\answersIndex.json
+		..\AdditionalConfig\ElasticSearch\confluenceIndex.json = ..\AdditionalConfig\ElasticSearch\confluenceIndex.json
+		..\AdditionalConfig\ElasticSearch\JiraIndex.json = ..\AdditionalConfig\ElasticSearch\JiraIndex.json
+		..\AdditionalConfig\ElasticSearch\questionsIndex.json = ..\AdditionalConfig\ElasticSearch\questionsIndex.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "setup", "setup", "{A3FF8042-75A1-4A1D-9A25-3B70D8D611CF}"
+	ProjectSection(SolutionItems) = preProject
+		..\AdditionalConfig\setupForElasticQa\copy-files-and-create-indexes.sh = ..\AdditionalConfig\setupForElasticQa\copy-files-and-create-indexes.sh
+		..\AdditionalConfig\setupForElasticQa\delete-indexes.sh = ..\AdditionalConfig\setupForElasticQa\delete-indexes.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{5846A9B3-E99F-4095-BE30-BF103F7427B8}"
+	ProjectSection(SolutionItems) = preProject
+		..\.dockerignore = ..\.dockerignore
+		..\build\api.dockerfile = ..\build\api.dockerfile
+		..\build\base.build.dockerfile = ..\build\base.build.dockerfile
+		..\build\docker-compose.yml = ..\build\docker-compose.yml
+		..\build\elasticsearch.dockerfile = ..\build\elasticsearch.dockerfile
+		..\build\scheduler.dockerfile = ..\build\scheduler.dockerfile
+		..\build\tests.dockerfile = ..\build\tests.dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{9D2E569A-A70C-4005-B91C-03CD9E3C8ECB}"
+ProjectSection(SolutionItems) = preProject
+	..\docs\GETTING_STARTED.md = ..\docs\GETTING_STARTED.md
+	..\docs\LICENSE.md = ..\docs\LICENSE.md
+	..\README.md = ..\README.md
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E43D3B2-66BE-49AE-8753-4928D6F224AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E43D3B2-66BE-49AE-8753-4928D6F224AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E43D3B2-66BE-49AE-8753-4928D6F224AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E43D3B2-66BE-49AE-8753-4928D6F224AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8FEF46-156B-4522-B6CF-975CF82D1C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8FEF46-156B-4522-B6CF-975CF82D1C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8FEF46-156B-4522-B6CF-975CF82D1C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8FEF46-156B-4522-B6CF-975CF82D1C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DD37E7-E1C8-4FBD-A65F-F10F23948E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DD37E7-E1C8-4FBD-A65F-F10F23948E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DD37E7-E1C8-4FBD-A65F-F10F23948E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DD37E7-E1C8-4FBD-A65F-F10F23948E1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A39B12A9-4928-41B2-965E-704C77C672D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A39B12A9-4928-41B2-965E-704C77C672D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A39B12A9-4928-41B2-965E-704C77C672D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A39B12A9-4928-41B2-965E-704C77C672D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EBE7D30-BE55-46E5-ACA0-5B30CBD58E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBE7D30-BE55-46E5-ACA0-5B30CBD58E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBE7D30-BE55-46E5-ACA0-5B30CBD58E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBE7D30-BE55-46E5-ACA0-5B30CBD58E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DAD7146-0051-4598-AD83-BACD1FF4B71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DAD7146-0051-4598-AD83-BACD1FF4B71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DAD7146-0051-4598-AD83-BACD1FF4B71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DAD7146-0051-4598-AD83-BACD1FF4B71C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1613F4B-CDAB-4A74-9756-F7D2481D4A8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1613F4B-CDAB-4A74-9756-F7D2481D4A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1613F4B-CDAB-4A74-9756-F7D2481D4A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1613F4B-CDAB-4A74-9756-F7D2481D4A8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E4EE2E-D605-4D25-8C92-3E16AD0D462B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E4EE2E-D605-4D25-8C92-3E16AD0D462B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E4EE2E-D605-4D25-8C92-3E16AD0D462B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E4EE2E-D605-4D25-8C92-3E16AD0D462B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C1613F4B-CDAB-4A74-9756-F7D2481D4A8A} = {3A4882C9-EEE9-4B71-8E5A-E25352CB530A}
+		{78E4EE2E-D605-4D25-8C92-3E16AD0D462B} = {3A4882C9-EEE9-4B71-8E5A-E25352CB530A}
+		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654} = {3A4882C9-EEE9-4B71-8E5A-E25352CB530A}
+		{9517216F-AAFF-4100-8301-1952AAB4CA34} = {0FA9C610-EB30-4529-A2CA-589F74EB79EF}
+		{462E40B8-31D9-45B4-8256-7C767BC2BFC4} = {0FA9C610-EB30-4529-A2CA-589F74EB79EF}
+		{79FA227A-1DC7-4E3B-B73C-BFA2208DCEBC} = {462E40B8-31D9-45B4-8256-7C767BC2BFC4}
+		{A3FF8042-75A1-4A1D-9A25-3B70D8D611CF} = {462E40B8-31D9-45B4-8256-7C767BC2BFC4}
+		{5846A9B3-E99F-4095-BE30-BF103F7427B8} = {0FA9C610-EB30-4529-A2CA-589F74EB79EF}
+		{9D2E569A-A70C-4005-B91C-03CD9E3C8ECB} = {0FA9C610-EB30-4529-A2CA-589F74EB79EF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45452EC6-18DC-4270-8AF2-4373A7BD00E8}
+	EndGlobalSection
+EndGlobal

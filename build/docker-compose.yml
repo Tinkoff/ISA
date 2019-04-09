@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  api:
+    build:
+      dockerfile: ./build/api.dockerfile
+      context: ..
+      args:
+        BUILD_NUMBER: 0.1
+    ports:
+      - "5000:5000"
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=DevDocker
+    depends_on:
+      - mongodb
+      - es
+    container_name: tinkoff-isa-api
+   
+  mongodb:
+    image: mongo:3.6
+    ports:
+      - "27017:27017"
+    container_name: tinkoff-isa-mongodb
+    
+  es:
+    build:
+      dockerfile: ./build/elasticsearch.dockerfile
+      context: ..
+    ports:
+      - "9200:9200"
+    container_name: tinkoff-isa-es
+    
+  scheduler:
+    build:
+      dockerfile: ./build/scheduler.dockerfile
+      context: ..
+      args:
+        BUILD_NUMBER: 0.1
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=DevDocker  
+    depends_on:
+      - mongodb
+      - es
+    container_name: tinkoff-isa-scheduler      
