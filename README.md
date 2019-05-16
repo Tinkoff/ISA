@@ -1,5 +1,7 @@
 # Information Search Assistant
 
+[![Build Status](https://travis-ci.com/TinkoffCreditSystems/ISA.svg?branch=master)](https://travis-ci.com/TinkoffCreditSystems/ISA)
+
 In an enterprise world of information it's quite difficult to find
 exactly what you are looking for. ISA will try to make this process effortless and faster.
 
