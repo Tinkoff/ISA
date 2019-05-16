@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: SDK 2.2.107
+dotnet: 2.2.107
 solution: src/Tinkoff.ISA.sln
 script:
   - dotnet restore
