@@ -2,7 +2,8 @@ dist: bionic
 language: csharp
 mono: none
 dotnet: 2.2.100
-solution: src/Tinkoff.ISA.sln
+solution: Tinkoff.ISA.sln
 script:
+  - cd src
   - dotnet restore
   - dotnet test
