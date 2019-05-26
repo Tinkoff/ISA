@@ -19,7 +19,6 @@ namespace Tinkoff.ISA.DAL
             services.AddSingleton<IQuestionDao, QuestionDao>();
             services.AddSingleton<IApplicationPropertyDao, ApplicationPropertyDao>();
             services.AddSingleton<ISlackHttpClient, SlackHttpClient>();
-            services.AddSingleton<IHttpClient, HttpClientWrapper>();
             services.AddSingleton<IElasticClientWrapper, ElasticClientWrapper>();
             services.AddSingleton<IElasticsearchClient, ElasticsearchClient>();
             services.AddSingleton<IConfluenceHttpClient, ConfluenceHttpClient>();

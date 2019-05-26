@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Tinkoff.ISA.DAL.Common
 {
-    public interface IHttpClient : IDisposable
+    public interface IHttpClient
     {
         Uri BaseAddress { get; set; }
 

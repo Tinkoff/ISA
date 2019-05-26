@@ -9,9 +9,9 @@ namespace Tinkoff.ISA.DAL.Common
     {
         private readonly HttpClient _httpClient;
 
-        public HttpClientWrapper()
+        public HttpClientWrapper(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
         public Uri BaseAddress
@@ -35,7 +35,5 @@ namespace Tinkoff.ISA.DAL.Common
         public Task<HttpResponseMessage> PostAsync(string requestUri, StringContent content) => _httpClient.PostAsync(requestUri, content);
 
         public Task<HttpResponseMessage> GetAsync(string requestUri) => _httpClient.GetAsync(requestUri);
-
-        public void Dispose() => _httpClient?.Dispose();
     }
 }
