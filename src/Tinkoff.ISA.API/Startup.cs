@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Tinkoff.ISA.AppLayer;
 using Tinkoff.ISA.Infrastructure.Settings;
 using Tinkoff.ISA.DAL;
+using Tinkoff.ISA.DAL.Common;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -35,6 +36,7 @@ namespace Tinkoff.ISA.API
             services.Configure<ElasticsearchSettings>(_configuration.GetSection("ElasticsearchSettings"));
             services.AddInfrastructureDependencies();
             services.AddDalDependencies();
+            services.AddHttpClient<IHttpClient, HttpClientWrapper>();
             services.AddAppDependencies();
             services.AddMvc();
             services.AddAutoMapper();
