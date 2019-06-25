@@ -39,7 +39,7 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
         }
 
         [Fact]
-        public async Task GetKnowledgeBatch_UploadedToDate_ShouldBeAccordingToTheLatestDocument()
+        public async Task GetKnowledgeBatch_UploadedToDate_ShouldBeAccordingToTheLastDocument()
         {
             // Arrange
             var firstIssueDate = DateTime.Now;
@@ -50,6 +50,7 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
             var secondIssue = CreateIssue(secondIssueDate);
             var thirdIssue = CreateIssue(thirdIssueDate);
             
+            // it implies that issues come from jira sorted by time in ascending order
             var issues = new List<Issue>
             {
                 firstIssue,
@@ -68,11 +69,49 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
             var knowledgeBatch = await _jiraProvider.GetKnowledgeBatch(new KnowledgeRequest
             {
                 StartAt = 0,
-                StartDate = DateTimeOffset.Now
+                StartDate = DateTimeOffset.Now.AddDays(-1)
             });
 
             // Assert
             Assert.Equal(thirdIssueDate, knowledgeBatch.UploadedToDate);
+        }
+
+        [Theory]
+        [InlineData(10, 11, false)]
+        [InlineData(10, 10, true)]
+        public async Task GetKnowledgeBatch_IsLastBatchProperty_ShouldBeSetCorrectly(
+            int amountOfReturnedIssues, int amountOfTotalIssues, bool shouldBeLastBatch)
+        {
+            // Arrange
+            var issues = new List<Issue>();
+            var issueUpdatedDate = DateTime.Now.AddDays(-1);
+            
+            for (var i = 0; i < amountOfReturnedIssues; i++)
+            {
+                var issue = CreateIssue(issueUpdatedDate);
+                issues.Add(issue);
+                issueUpdatedDate = issueUpdatedDate.AddSeconds(10);
+            }
+            
+            var mockPagedQueryResult = new MockPagedQueryResult<Issue>(issues)
+            {
+                TotalItems = amountOfTotalIssues
+            };
+            
+            _issueServiceMock
+                .Setup(service => service.GetIssuesFromJqlAsync(It.IsAny<IssueSearchOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(mockPagedQueryResult);
+            
+            // Act
+            var knowledgeBatch = await _jiraProvider.GetKnowledgeBatch(new KnowledgeRequest
+            {
+                StartAt = 0,
+                StartDate = DateTimeOffset.Now.AddDays(-1)
+            });
+            
+            // Assert
+            Assert.Equal(shouldBeLastBatch, knowledgeBatch.IsLastBatch);
         }
 
         private Issue CreateIssue(DateTime updateDate)

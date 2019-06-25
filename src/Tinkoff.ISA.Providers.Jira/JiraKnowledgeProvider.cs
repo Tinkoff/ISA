@@ -42,13 +42,20 @@ namespace Tinkoff.ISA.Providers.Jira
             };
         }
 
+        private static string EnsureTrailingSlash(string baseUrl)
+        {
+            return baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/";
+        }
+
         private IList<JiraDocument> ExtractDocuments(IEnumerable<Issue> issues)
         {
+            var baseUrl = EnsureTrailingSlash(_baseUrl);
+                
             return issues.Select(issue => new JiraDocument
             {
                 Title = issue.Summary,
                 Text = issue.Description,
-                Link = $"{_baseUrl}browse/{issue.Key}"
+                Link = $"{baseUrl}browse/{issue.Key}"
             }).ToList();
         }
 
