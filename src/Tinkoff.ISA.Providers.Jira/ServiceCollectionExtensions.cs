@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Tinkoff.ISA.Core;
-using static Atlassian.Jira.Jira;
+using AtlassianJira = Atlassian.Jira.Jira;
 
 namespace Tinkoff.ISA.Providers.Jira
 {
@@ -11,39 +11,37 @@ namespace Tinkoff.ISA.Providers.Jira
     {
         public static IServiceCollection AddJiraProvider(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var jiraSection = GetJiraSection(configuration);
+            var settings = CreateJiraProviderSettings(configuration);
             
-            serviceCollection.AddOptions<JiraProviderSettings>()
-                .Bind(jiraSection)
-                .ValidateDataAnnotations();
-
+            serviceCollection.AddSingleton(settings);
             serviceCollection.AddSingleton(ProduceJiraKnowledgeProvider);
             
             return serviceCollection;
         }
 
-        private static IConfigurationSection GetJiraSection(IConfiguration configuration)
+        private static JiraProviderSettings CreateJiraProviderSettings(IConfiguration configuration)
         {
             const string sectionName = "JiraSettings";
             
             var jiraSection = configuration.GetSection(sectionName);
-
             if (!jiraSection.Exists())
             {
                 throw new InvalidOperationException($"\"{sectionName}\" section doesn't exist.");
             }
-
-            return jiraSection;
+            
+            var settings = new JiraProviderSettings();
+            configuration.Bind(sectionName, settings);
+            
+            return settings;
         }
 
         private static IKnowledgeProvider ProduceJiraKnowledgeProvider(IServiceProvider serviceProvider)
         {
-            var options = serviceProvider.GetService<IOptions<JiraProviderSettings>>();
+            var settings = serviceProvider.GetService<JiraProviderSettings>();
             
-            var settings = options.Value;
-            var jiraClient = CreateRestClient(settings.BaseUrl, settings.UserName, settings.Token);
+            var jiraClient = AtlassianJira.CreateRestClient(settings.BaseUrl, settings.UserName, settings.Token);
                     
-            return new JiraKnowledgeProvider(jiraClient, options);
+            return new JiraKnowledgeProvider(jiraClient, settings);
         }
     }
 }    

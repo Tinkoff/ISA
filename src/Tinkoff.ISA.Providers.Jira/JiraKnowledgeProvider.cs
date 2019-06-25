@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlassian.Jira;
-using Microsoft.Extensions.Options;
 using Tinkoff.ISA.Core;
 using Tinkoff.ISA.Core.Documents;
 using JiraClient = Atlassian.Jira.Jira;
@@ -18,11 +17,9 @@ namespace Tinkoff.ISA.Providers.Jira
         private readonly int _batchSize;
         private readonly string _baseUrl;
 
-        public JiraKnowledgeProvider(JiraClient jiraClient, IOptions<JiraProviderSettings> options)
+        public JiraKnowledgeProvider(JiraClient jiraClient, JiraProviderSettings settings)
         {
             _jiraClient = jiraClient;
-            
-            var settings = options.Value;
             _baseUrl = settings.BaseUrl;
             _projectNames = settings.ProjectNames;
             _batchSize = settings.BatchSize;
@@ -33,21 +30,19 @@ namespace Tinkoff.ISA.Providers.Jira
             var issuesPagedResult = await GetIssuesAsync(request);
 
             var uploadedToDate = GetDateOfUpdateOfTheLatestDocument(issuesPagedResult);
-            var documents = ExtractDocuments(issuesPagedResult);
+            var documents = MapToJiraDocuments(issuesPagedResult);
 
-            return new KnowledgeBatch<JiraDocument>(documents)
-            {
-                UploadedToDate = uploadedToDate,
-                IsLastBatch = issuesPagedResult.TotalItems == documents.Count
-            };
+            var isLastBatch = issuesPagedResult.TotalItems == documents.Count;
+            
+            return new KnowledgeBatch<JiraDocument>(documents, uploadedToDate, isLastBatch);
         }
 
         private static string EnsureTrailingSlash(string baseUrl)
         {
-            return baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/";
+            return baseUrl.EndsWith("/", StringComparison.InvariantCulture) ? baseUrl : baseUrl + "/";
         }
 
-        private IList<JiraDocument> ExtractDocuments(IEnumerable<Issue> issues)
+        private IList<JiraDocument> MapToJiraDocuments(IEnumerable<Issue> issues)
         {
             var baseUrl = EnsureTrailingSlash(_baseUrl);
                 

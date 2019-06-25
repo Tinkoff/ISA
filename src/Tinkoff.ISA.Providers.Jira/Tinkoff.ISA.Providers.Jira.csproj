@@ -6,10 +6,9 @@
 
     <ItemGroup>
       <PackageReference Include="Atlassian.SDK" Version="10.5.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="2.2.0" />
     </ItemGroup>
 
     <ItemGroup>

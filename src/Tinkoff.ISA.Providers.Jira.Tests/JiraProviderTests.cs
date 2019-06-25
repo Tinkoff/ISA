@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Atlassian.Jira;
 using Atlassian.Jira.Remote;
-using Microsoft.Extensions.Options;
 using Moq;
 using Tinkoff.ISA.Core;
 using Xunit;
@@ -21,21 +20,17 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
         
         public JiraProviderTests()
         {
-            var optionsMock = new Mock<IOptions<JiraProviderSettings>>();
-            
-            optionsMock
-                .SetupGet(opts => opts.Value)
-                .Returns(new JiraProviderSettings
-                {
-                    BaseUrl = "https://base_url",
-                    BatchSize = 100,
-                    ProjectNames = new List<string>(),
-                    UserName = "user",
-                    Token = "sdv78f8sf"
-                });
+            var settings = new JiraProviderSettings
+            {
+                BaseUrl = "https://base_url",
+                BatchSize = 100,
+                ProjectNames = new List<string>(),
+                UserName = "user",
+                Token = "sdv78f8sf"
+            };
 
-            _jiraClientMock = CreateJiraClient(optionsMock.Object.Value);
-            _jiraProvider = new JiraKnowledgeProvider(_jiraClientMock, optionsMock.Object);
+            _jiraClientMock = CreateJiraClient(settings);
+            _jiraProvider = new JiraKnowledgeProvider(_jiraClientMock, settings);
         }
 
         [Fact]
@@ -80,13 +75,13 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
         [InlineData(10, 11, false)]
         [InlineData(10, 10, true)]
         public async Task GetKnowledgeBatch_IsLastBatchProperty_ShouldBeSetCorrectly(
-            int amountOfReturnedIssues, int amountOfTotalIssues, bool shouldBeLastBatch)
+            int numberOfReturnedIssues, int numberOfTotalIssues, bool shouldBeLastBatch)
         {
             // Arrange
             var issues = new List<Issue>();
             var issueUpdatedDate = DateTime.Now.AddDays(-1);
             
-            for (var i = 0; i < amountOfReturnedIssues; i++)
+            for (var i = 0; i < numberOfReturnedIssues; i++)
             {
                 var issue = CreateIssue(issueUpdatedDate);
                 issues.Add(issue);
@@ -95,7 +90,7 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
             
             var mockPagedQueryResult = new MockPagedQueryResult<Issue>(issues)
             {
-                TotalItems = amountOfTotalIssues
+                TotalItems = numberOfTotalIssues
             };
             
             _issueServiceMock
