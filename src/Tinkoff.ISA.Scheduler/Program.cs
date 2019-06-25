@@ -8,6 +8,7 @@ using Serilog;
 using Tinkoff.ISA.AppLayer;
 using Tinkoff.ISA.AppLayer.Jobs;
 using Tinkoff.ISA.DAL;
+using Tinkoff.ISA.DAL.Common;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using Tinkoff.ISA.Infrastructure.Settings;
@@ -32,7 +33,7 @@ namespace Tinkoff.ISA.Scheduler
             var logSettings = configuration.GetSection("Logging").Get<LoggingSettings>();
 
             //setup our DI
-            var serviceProvider = new ServiceCollection()
+            var services = new ServiceCollection()
                 .AddSingleton(new LoggerFactory().AddSerilog(LogExtensions.CreateLogger(logSettings, "isa-.log")))
                 .AddLogging()
                 .AddSingleton<IJob, JiraJob>()
@@ -47,8 +48,11 @@ namespace Tinkoff.ISA.Scheduler
                 .Configure<JiraSettings>(configuration.GetSection("JiraSettings"))
                 .Configure<ConfluenceSettings>(configuration.GetSection("ConfluenceSettings"))
                 .Configure<ElasticsearchSettings>(configuration.GetSection("ElasticsearchSettings"))
-                .Configure<ConnectionStringsSettings>(configuration.GetSection("ConnectionStrings"))
-                .BuildServiceProvider();
+                .Configure<ConnectionStringsSettings>(configuration.GetSection("ConnectionStrings"));
+            
+            services.AddHttpClient<IHttpClient, HttpClientWrapper>();
+            
+            var serviceProvider = services.BuildServiceProvider();
 
             var logger = serviceProvider.GetService<ILoggerFactory>()
                 .CreateLogger<Program>();

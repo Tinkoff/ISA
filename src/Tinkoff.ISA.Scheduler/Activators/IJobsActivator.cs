@@ -1,7 +1,9 @@
-﻿namespace Tinkoff.ISA.Scheduler.Activators
+﻿using System.Threading.Tasks;
+
+namespace Tinkoff.ISA.Scheduler.Activators
 {
     public interface IJobsActivator
     {
-        void StartJobs();
+        Task StartJobs();
     }
 }

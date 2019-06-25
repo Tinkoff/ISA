@@ -30,7 +30,7 @@ namespace Tinkoff.ISA.Scheduler.Activators
             _jobNames = _settings.Value.JobNames;
         }
 
-        public async void StartJobs()
+        public async Task StartJobs()
         {
             var jobServices = _serviceProvider.GetServices(JobsInterfaceType).ToList();
             var jobTypes = GetJobsTypes(JobsInterfaceType);
