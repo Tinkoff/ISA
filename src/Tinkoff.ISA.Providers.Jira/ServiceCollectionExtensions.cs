@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Tinkoff.ISA.Core;
 using AtlassianJira = Atlassian.Jira.Jira;
 
@@ -40,7 +39,7 @@ namespace Tinkoff.ISA.Providers.Jira
             var settings = serviceProvider.GetService<JiraProviderSettings>();
             
             var jiraClient = AtlassianJira.CreateRestClient(settings.BaseUrl, settings.UserName, settings.Token);
-                    
+
             return new JiraKnowledgeProvider(jiraClient, settings);
         }
     }

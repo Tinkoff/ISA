@@ -58,11 +58,11 @@ namespace Tinkoff.ISA.Providers.Jira
         {
             var startDateUtc = request.StartDate.UtcDateTime.ToString("yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture);
             
-            var jql = $"project in ({string.Join(", ", _projectNames)}) " +
+            var jqlQuery = $"project in ({string.Join(", ", _projectNames)}) " +
                       $"AND updated >= \"{startDateUtc}\" " +
                       "ORDER BY updated ASC";
             
-            var options = new IssueSearchOptions(jql)
+            var options = new IssueSearchOptions(jqlQuery)
             {
                 StartAt = request.StartAt,
                 MaxIssuesPerRequest = _batchSize
