@@ -12,6 +12,7 @@ using Tinkoff.ISA.DAL.Common;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using Tinkoff.ISA.Infrastructure.Settings;
+using Tinkoff.ISA.Providers.Jira;
 using Tinkoff.ISA.Scheduler.Activators;
 using Tinkoff.ISA.Scheduler.Schedule;
 
@@ -31,11 +32,13 @@ namespace Tinkoff.ISA.Scheduler
             var configuration = builder.Build();
 
             var logSettings = configuration.GetSection("Logging").Get<LoggingSettings>();
+            var jiraProviderSettings = JiraSettingsCreator.CreateProviderSettings(configuration);
 
             //setup our DI
             var services = new ServiceCollection()
                 .AddSingleton(new LoggerFactory().AddSerilog(LogExtensions.CreateLogger(logSettings, "isa-.log")))
                 .AddLogging()
+                .AddJiraProvider(jiraProviderSettings)
                 .AddSingleton<IJob, JiraJob>()
                 .AddSingleton<IJob, ConfluenceJob>()
                 .AddSingleton<IJob, MongoIndexingForElasticJob>()
