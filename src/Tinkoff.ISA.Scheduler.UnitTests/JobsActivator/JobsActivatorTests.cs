@@ -65,9 +65,9 @@ namespace Tinkoff.ISA.Scheduler.UnitTests.JobsActivator
         }
 
         [Fact]
-        public void StartJobs_JustInvoked_ShouldInvokedJobsAandBandnotInvokedC()
+        public async Task StartJobs_JustInvoked_ShouldInvokedJobsAandBandnotInvokedC()
         {
-            //arrange
+            // Arrange
             var names = new[]
             {
                 "JobA",
@@ -94,19 +94,19 @@ namespace Tinkoff.ISA.Scheduler.UnitTests.JobsActivator
                 _settingOptionsMock.Object,
                 _logger.Object);
 
-            //act
-            job.StartJobs();
+            // Act
+            await job.StartJobs();
 
-            //Assert
+            // Assert
             Assert.True(JobA.WasInvoked);
             Assert.True(JobB.WasInvoked);
             Assert.False(JobC.WasInvoked);
         }
 
         [Fact]
-        public void StartJobs_JustInvoked_ShouldRestartJob()
+        public async Task StartJobs_JustInvoked_ShouldRestartJob()
         {
-            //arrange
+            // Arrange
             var names = new[]
             {
                 "JobError"
@@ -130,10 +130,10 @@ namespace Tinkoff.ISA.Scheduler.UnitTests.JobsActivator
                 _settingOptionsMock.Object,
                 _logger.Object);
 
-            //act
-            job.StartJobs();
+            // Act
+            await job.StartJobs();
 
-            //Assert
+            // Assert
             Assert.Equal(2, JobError.InvokedCount);
         }
     }

@@ -284,6 +284,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
             _applicationPropertyDaoMock.VerifyNoOtherCalls();
         }
     }
+    
     public class MockPagedQueryResult<T> : IPagedQueryResult<T>
     {
         private readonly IEnumerable<T> _enumerable;
