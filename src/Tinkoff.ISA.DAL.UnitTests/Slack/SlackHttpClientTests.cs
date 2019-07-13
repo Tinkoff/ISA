@@ -4,7 +4,7 @@ using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Tinkoff.ISA.DAL.Common;
+using Tinkoff.ISA.Core.Http;
 using Tinkoff.ISA.DAL.Slack;
 using Tinkoff.ISA.Infrastructure.Exceptions;
 using Tinkoff.ISA.Infrastructure.Settings;

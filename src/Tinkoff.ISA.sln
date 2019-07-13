@@ -63,11 +63,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{5846A9
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{9D2E569A-A70C-4005-B91C-03CD9E3C8ECB}"
-ProjectSection(SolutionItems) = preProject
-	..\docs\GETTING_STARTED.md = ..\docs\GETTING_STARTED.md
-	..\docs\LICENSE.md = ..\docs\LICENSE.md
-	..\README.md = ..\README.md
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		..\docs\GETTING_STARTED.md = ..\docs\GETTING_STARTED.md
+		..\docs\LICENSE.md = ..\docs\LICENSE.md
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinkoff.ISA.Providers.Jira", "Tinkoff.ISA.Providers.Jira\Tinkoff.ISA.Providers.Jira.csproj", "{8EB89616-B508-4D52-A195-9A815DBB57DD}"
 EndProject
@@ -76,6 +76,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jira", "Jira", "{51EC05F9-2C8D-442C-9C0E-2F622541712B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinkoff.ISA.Providers.Jira.Tests", "Tinkoff.ISA.Providers.Jira.Tests\Tinkoff.ISA.Providers.Jira.Tests.csproj", "{67D5FFFD-9EBC-4D46-8454-DFF2CCA98543}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Confluence", "Confluence", "{00476D69-FA95-41D2-8E60-3E9B2664BE36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinkoff.ISA.Providers.Confluence", "Tinkoff.ISA.Providers.Confluence\Tinkoff.ISA.Providers.Confluence.csproj", "{FB931A13-3A6C-4C01-B42F-985F13EDB3E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinkoff.ISA.Providers.Confluence.Tests", "Tinkoff.ISA.Providers.Confluence.Tests\Tinkoff.ISA.Providers.Confluence.Tests.csproj", "{5FAB5CCE-1512-4785-A0B8-E1107F19DE33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +137,14 @@ Global
 		{67D5FFFD-9EBC-4D46-8454-DFF2CCA98543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67D5FFFD-9EBC-4D46-8454-DFF2CCA98543}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67D5FFFD-9EBC-4D46-8454-DFF2CCA98543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB931A13-3A6C-4C01-B42F-985F13EDB3E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB931A13-3A6C-4C01-B42F-985F13EDB3E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB931A13-3A6C-4C01-B42F-985F13EDB3E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB931A13-3A6C-4C01-B42F-985F13EDB3E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FAB5CCE-1512-4785-A0B8-E1107F19DE33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAB5CCE-1512-4785-A0B8-E1107F19DE33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FAB5CCE-1512-4785-A0B8-E1107F19DE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAB5CCE-1512-4785-A0B8-E1107F19DE33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +161,8 @@ Global
 		{9D2E569A-A70C-4005-B91C-03CD9E3C8ECB} = {0FA9C610-EB30-4529-A2CA-589F74EB79EF}
 		{8EB89616-B508-4D52-A195-9A815DBB57DD} = {51EC05F9-2C8D-442C-9C0E-2F622541712B}
 		{67D5FFFD-9EBC-4D46-8454-DFF2CCA98543} = {51EC05F9-2C8D-442C-9C0E-2F622541712B}
+		{FB931A13-3A6C-4C01-B42F-985F13EDB3E9} = {00476D69-FA95-41D2-8E60-3E9B2664BE36}
+		{5FAB5CCE-1512-4785-A0B8-E1107F19DE33} = {00476D69-FA95-41D2-8E60-3E9B2664BE36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45452EC6-18DC-4270-8AF2-4373A7BD00E8}

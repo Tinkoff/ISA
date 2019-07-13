@@ -35,6 +35,7 @@
     <ProjectReference Include="..\Tinkoff.ISA.DAL\Tinkoff.ISA.DAL.csproj" />
     <ProjectReference Include="..\Tinkoff.ISA.Infrastructure\Tinkoff.ISA.Infrastructure.csproj" />
     <ProjectReference Include="..\Tinkoff.ISA.Providers.Jira\Tinkoff.ISA.Providers.Jira.csproj" />
+    <ProjectReference Include="..\Tinkoff.ISA.Core\Tinkoff.ISA.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

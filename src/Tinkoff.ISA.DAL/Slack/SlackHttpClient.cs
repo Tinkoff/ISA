@@ -9,7 +9,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Tinkoff.ISA.DAL.Common;
+using Tinkoff.ISA.Core.Http;
 using Tinkoff.ISA.DAL.Slack.Dtos;
 using Tinkoff.ISA.Infrastructure.Exceptions;
 using Tinkoff.ISA.Infrastructure.Settings;

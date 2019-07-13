@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tinkoff.ISA.DAL\Tinkoff.ISA.DAL.csproj" />
+    <ProjectReference Include="..\Tinkoff.ISA.Core\Tinkoff.ISA.Core.csproj" />
   </ItemGroup>
 
 </Project>
