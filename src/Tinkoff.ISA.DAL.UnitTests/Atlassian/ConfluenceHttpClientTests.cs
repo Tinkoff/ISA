@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Newtonsoft.Json;
-using Tinkoff.ISA.DAL.Common;
+using Tinkoff.ISA.Core.Http;
 using Tinkoff.ISA.DAL.Confluence;
 using Tinkoff.ISA.DAL.Confluence.Dtos;
 using Tinkoff.ISA.Infrastructure.Exceptions;

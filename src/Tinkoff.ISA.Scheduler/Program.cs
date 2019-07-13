@@ -8,7 +8,7 @@ using Serilog;
 using Tinkoff.ISA.AppLayer;
 using Tinkoff.ISA.AppLayer.Jobs;
 using Tinkoff.ISA.DAL;
-using Tinkoff.ISA.DAL.Common;
+using Tinkoff.ISA.Core.Http;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using Tinkoff.ISA.Infrastructure.Settings;

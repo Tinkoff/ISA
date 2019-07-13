@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Tinkoff.ISA.DAL.Common
+namespace Tinkoff.ISA.Core.Http
 {
     public interface IHttpClient
     {

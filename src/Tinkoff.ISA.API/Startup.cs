@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Tinkoff.ISA.AppLayer;
 using Tinkoff.ISA.Infrastructure.Settings;
 using Tinkoff.ISA.DAL;
-using Tinkoff.ISA.DAL.Common;
+using Tinkoff.ISA.Core.Http;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;

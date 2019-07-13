@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Tinkoff.ISA.DAL.Common;
 using Tinkoff.ISA.DAL.Confluence;
 using Tinkoff.ISA.DAL.Elasticsearch.Client;
 using Tinkoff.ISA.DAL.Elasticsearch.Services;

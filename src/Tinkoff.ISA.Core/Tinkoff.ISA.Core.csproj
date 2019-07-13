@@ -4,4 +4,7 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Http\" />
+    </ItemGroup>
 </Project>
