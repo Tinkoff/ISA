@@ -15,6 +15,8 @@ namespace Tinkoff.ISA.Infrastructure.MongoDb
         private readonly Lazy<MongoClient> _isaMongoClient;
         private readonly string _isaDbName;
 
+        public IMongoClient MongoClient => _isaMongoClient.Value;
+        
         static MongoContext()
         {
             BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
