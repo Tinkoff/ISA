@@ -1,65 +1,79 @@
-﻿using System;
-using System.IO;
-using System.Threading;
+﻿using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.Mongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Tinkoff.ISA.AppLayer;
 using Tinkoff.ISA.AppLayer.Jobs;
 using Tinkoff.ISA.DAL;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
+using Tinkoff.ISA.Infrastructure.MongoDb;
 using Tinkoff.ISA.Infrastructure.Settings;
-using Tinkoff.ISA.Scheduler.Activators;
-using Tinkoff.ISA.Scheduler.Schedule;
 
 namespace Tinkoff.ISA.Scheduler
 {
-    internal class Program
+    internal static class Program
     {
-        private static readonly ManualResetEventSlim Shutdown = new ManualResetEventSlim();
-
-        private static void Main()
+        public static Task Main(string[] args)
         {
-            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(ConfigHelper.GetConfigByEnvironment(environmentName));
+            var host = new HostBuilder()
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+                    config
+                        .SetBasePath(env.ContentRootPath)
+                        .AddJsonFile(ConfigHelper.GetConfigByEnvironment(env.EnvironmentName));
+                })
+                .ConfigureServices((context, services) =>
+                {
+                    var configuration = context.Configuration;
 
-            var configuration = builder.Build();
+                    services
+                        .AddHangfire((serviceProvider, config) =>
+                        {
+                            var mongoContext = serviceProvider
+                                .GetService<IMongoContext>();
 
-            var logSettings = configuration.GetSection("Logging").Get<LoggingSettings>();
+                            config.UseMongoStorage(
+                                mongoContext.MongoClient.Settings,
+                                "Jobs",
+                                new MongoStorageOptions
+                                {
+                                    MigrationOptions = new MongoMigrationOptions
+                                    {
+                                        Strategy = MongoMigrationStrategy.Drop,
+                                        BackupStrategy = MongoBackupStrategy.Collections
+                                    }
+                                });
+                        })
+                        .AddSingleton<IHostedService, HangfireService>()
+                        .AddAppDependencies()
+                        .AddDalDependencies()
+                        .AddInfrastructureDependencies()
+                        .Configure<ConnectionStringsSettings>(configuration.GetSection("ConnectionStrings"))
+                        .Configure<JiraSettings>(configuration.GetSection("JiraSettings"))
+                        .Configure<ConfluenceSettings>(configuration.GetSection("ConfluenceSettings"))
+                        .Configure<ElasticsearchSettings>(configuration.GetSection("ElasticsearchSettings"))
+                        .AddSingleton<IJob, JiraJob>()
+                        .AddSingleton<IJob, ConfluenceJob>()
+                        .AddSingleton<IJob, MongoIndexingForElasticJob>();
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    var logSettings = hostingContext.Configuration
+                        .GetSection("Logging")
+                        .Get<LoggingSettings>();
+                    var logger = LogExtensions.CreateLogger(logSettings, "isa-.log");
+                    
+                    logging.AddSerilog(logger);
+                })
+                .UseConsoleLifetime()
+                .Build();
 
-            //setup our DI
-            var serviceProvider = new ServiceCollection()
-                .AddSingleton(new LoggerFactory().AddSerilog(LogExtensions.CreateLogger(logSettings, "isa-.log")))
-                .AddLogging()
-                .AddSingleton<IJob, JiraJob>()
-                .AddSingleton<IJob, ConfluenceJob>()
-                .AddSingleton<IJob, MongoIndexingForElasticJob>()
-                .AddSingleton<IScheduler, Schedule.Scheduler>()
-                .AddSingleton<IJobsActivator, JobsActivator>()
-                .AddAppDependencies()
-                .AddDalDependencies()
-                .AddInfrastructureDependencies()
-                .Configure<SchedulerSettings>(configuration.GetSection("Scheduler"))
-                .Configure<JiraSettings>(configuration.GetSection("JiraSettings"))
-                .Configure<ConfluenceSettings>(configuration.GetSection("ConfluenceSettings"))
-                .Configure<ElasticsearchSettings>(configuration.GetSection("ElasticsearchSettings"))
-                .Configure<ConnectionStringsSettings>(configuration.GetSection("ConnectionStrings"))
-                .BuildServiceProvider();
-
-            var logger = serviceProvider.GetService<ILoggerFactory>()
-                .CreateLogger<Program>();
-            
-            logger.LogDebug("Starting application");
-            Console.WriteLine("Starting application");
-            
-            using (serviceProvider.GetService<IScheduler>())
-            {
-                Shutdown.Wait();
-            }
+            return host.RunAsync();
         }
     }
 }

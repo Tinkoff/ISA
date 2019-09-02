@@ -1,24 +1,19 @@
 ﻿using System.IO;
-using AutoMapper;
+using System.Threading.Tasks;
 using Hangfire;
-using Hangfire.Common;
 using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Tinkoff.ISA.AppLayer;
-using Tinkoff.ISA.AppLayer.Jobs;
-using Tinkoff.ISA.Infrastructure.Settings;
 using Tinkoff.ISA.DAL;
-using Tinkoff.ISA.DAL.Common;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using Tinkoff.ISA.Infrastructure.MongoDb;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Tinkoff.ISA.Infrastructure.Settings;
 
-namespace Tinkoff.ISA.API
+namespace Tinkoff.ISA.SchedulerUI
 {
     public class Startup
     {
@@ -37,14 +32,8 @@ namespace Tinkoff.ISA.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ConnectionStringsSettings>(_configuration.GetSection("ConnectionStrings"));
-            services.Configure<SlackSettings>(_configuration.GetSection("SlackSettings"));
-            services.Configure<ElasticsearchSettings>(_configuration.GetSection("ElasticsearchSettings"));
             services.AddInfrastructureDependencies();
             services.AddDalDependencies();
-            services.AddHttpClient<IHttpClient, HttpClientWrapper>();
-            services.AddAppDependencies();
-            services.AddMvc();
-            services.AddAutoMapper();
             services.AddHangfire((serviceProvider, config) =>
             {
                 var mongoContext = serviceProvider
@@ -65,11 +54,7 @@ namespace Tinkoff.ISA.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(
-            IApplicationBuilder app, 
-            IHostingEnvironment env, 
-            ILoggerFactory loggerFactory, 
-            IRecurringJobManager recurringJobManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             var logSettings = _configuration.GetSection("Logging").Get<LoggingSettings>();
 
@@ -85,23 +70,12 @@ namespace Tinkoff.ISA.API
                 app.UseHsts();
             }
 
-            app.UseMvc();
-            
-            recurringJobManager.AddOrUpdate<JiraJob>(
-                nameof(JiraJob), 
-                job => job.StartJob(), 
-                Cron.Minutely
-            );
-            recurringJobManager.AddOrUpdate<ConfluenceJob>(
-                nameof(ConfluenceJob), 
-                job => job.StartJob(), 
-                Cron.Minutely
-            );
-            recurringJobManager.AddOrUpdate<MongoIndexingForElasticJob>(
-                nameof(MongoIndexingForElasticJob), 
-                job => job.StartJob(), 
-                Cron.Minutely
-            );
+            app.UseHangfireDashboard();
+
+            app.Run(context => {
+                context.Response.Redirect("/hangfire");
+                return Task.CompletedTask;
+            });
         }
     }
 }

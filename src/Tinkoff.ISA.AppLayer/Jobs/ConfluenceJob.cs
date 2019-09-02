@@ -16,7 +16,7 @@ using Tinkoff.ISA.Infrastructure.Settings;
 
 namespace Tinkoff.ISA.AppLayer.Jobs
 {
-    internal class ConfluenceJob : IJob
+    public class ConfluenceJob : IJob
     {
         private readonly IConfluenceHttpClient _confluenceHttpClient;
         private readonly IElasticsearchClient _elasticsearchClient;

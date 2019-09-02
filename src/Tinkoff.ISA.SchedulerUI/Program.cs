@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Tinkoff.ISA.API
+namespace Tinkoff.ISA.SchedulerUI
 {
-    public class Program
+    public static class Program
     {
         public static Task Main(string[] args)
         {
-            return CreateWebHostBuilder(args).UseUrls("http://*:5000").Build().RunAsync();
+            return CreateWebHostBuilder(args).Build().RunAsync();
         }
 
         private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
