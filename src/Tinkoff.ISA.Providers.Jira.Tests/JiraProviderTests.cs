@@ -41,9 +41,9 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
             var secondIssueDate = firstIssueDate.AddSeconds(5);
             var thirdIssueDate = firstIssueDate.AddSeconds(10);
             
-            var firstIssue = CreateIssue(firstIssueDate);
-            var secondIssue = CreateIssue(secondIssueDate);
-            var thirdIssue = CreateIssue(thirdIssueDate);
+            var firstIssue = CreateIssue(firstIssueDate, 1);
+            var secondIssue = CreateIssue(secondIssueDate, 2);
+            var thirdIssue = CreateIssue(thirdIssueDate, 3);
             
             // it implies that issues come from jira sorted by time in ascending order
             var issues = new List<Issue>
@@ -83,7 +83,7 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
             
             for (var i = 0; i < numberOfReturnedIssues; i++)
             {
-                var issue = CreateIssue(issueUpdatedDate);
+                var issue = CreateIssue(issueUpdatedDate, 1);
                 issues.Add(issue);
                 issueUpdatedDate = issueUpdatedDate.AddSeconds(10);
             }
@@ -109,11 +109,12 @@ namespace Tinkoff.ISA.Providers.Jira.Tests
             Assert.Equal(shouldBeLastBatch, knowledgeBatch.IsLastBatch);
         }
 
-        private Issue CreateIssue(DateTime updateDate)
+        private Issue CreateIssue(DateTime updateDate, int issueNumber)
         {
             var firstRemoteIssue = new RemoteIssue
             {
-                updated = updateDate 
+                updated = updateDate,
+                key = $"key_{issueNumber}"
             };
             
             return new Issue(_jiraClientMock, firstRemoteIssue);

@@ -77,6 +77,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jira", "Jira", "{51EC05F9-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinkoff.ISA.Providers.Jira.Tests", "Tinkoff.ISA.Providers.Jira.Tests\Tinkoff.ISA.Providers.Jira.Tests.csproj", "{67D5FFFD-9EBC-4D46-8454-DFF2CCA98543}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tinkoff.ISA.SchedulerUI", "Tinkoff.ISA.SchedulerUI\Tinkoff.ISA.SchedulerUI.csproj", "{FD1C554F-4D10-49E4-9243-C727F42C18FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,10 @@ Global
 		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E1466A2-F07A-4C04-82D3-7BD2FD1F8654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD1C554F-4D10-49E4-9243-C727F42C18FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD1C554F-4D10-49E4-9243-C727F42C18FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD1C554F-4D10-49E4-9243-C727F42C18FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD1C554F-4D10-49E4-9243-C727F42C18FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EB89616-B508-4D52-A195-9A815DBB57DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EB89616-B508-4D52-A195-9A815DBB57DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB89616-B508-4D52-A195-9A815DBB57DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
