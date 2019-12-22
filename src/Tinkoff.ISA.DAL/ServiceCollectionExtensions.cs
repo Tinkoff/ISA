@@ -20,7 +20,7 @@ namespace Tinkoff.ISA.DAL
             services.AddSingleton<IApplicationPropertyDao, ApplicationPropertyDao>();
             services.AddSingleton<ISlackHttpClient, SlackHttpClient>();
             services.AddSingleton<IElasticClientWrapper, ElasticClientWrapper>();
-            services.AddSingleton<IElasticsearchClient, ElasticsearchClient>();
+            services.AddSingleton<IElasticSearchClient, ElasticSearchClient>();
             services.AddSingleton<IConfluenceHttpClient, ConfluenceHttpClient>();
             services.AddSingleton<IElasticSearchService, ElasticSearchService>();
             services.AddSingleton<IJiraClient, JiraClient>();

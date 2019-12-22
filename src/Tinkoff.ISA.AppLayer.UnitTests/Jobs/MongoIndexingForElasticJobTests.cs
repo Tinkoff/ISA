@@ -17,7 +17,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
     public class MongoIndexingForElasticJobTests
     {
         private readonly MongoIndexingForElasticJob _mongoIndexingForElasticJob;
-        private readonly Mock<IElasticsearchClient> _elasticsearchClientMock;
+        private readonly Mock<IElasticSearchClient> _elasticsearchClientMock;
         private readonly Mock<IApplicationPropertyDao> _applicationPropertyDaoMock;
         private readonly Mock<ISearchableTextService> _searchableTextServiceMock;
         
@@ -25,7 +25,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
         {
             var loggerMock = new Mock<ILogger<MongoIndexingForElasticJob>>();
             
-            _elasticsearchClientMock = new Mock<IElasticsearchClient>();
+            _elasticsearchClientMock = new Mock<IElasticSearchClient>();
             _applicationPropertyDaoMock = new Mock<IApplicationPropertyDao>();
             _searchableTextServiceMock = new Mock<ISearchableTextService>();
             

@@ -19,19 +19,19 @@ namespace Tinkoff.ISA.AppLayer.Jobs
     internal class ConfluenceJob : IJob
     {
         private readonly IConfluenceHttpClient _confluenceHttpClient;
-        private readonly IElasticsearchClient _elasticsearchClient;
+        private readonly IElasticSearchClient _elasticSearchClient;
         private readonly IApplicationPropertyDao _applicationPropertyDao;
         private readonly IOptions<ConfluenceSettings> _settings;
         private readonly ILogger<ConfluenceJob> _logger;
 
         public ConfluenceJob(IConfluenceHttpClient confluenceHttpClient,
-            IElasticsearchClient elasticsearchClient,
+            IElasticSearchClient elasticSearchClient,
             IApplicationPropertyDao applicationPropertyDao,
             IOptions<ConfluenceSettings> settings,
             ILogger<ConfluenceJob> logger)
         {
             _confluenceHttpClient = confluenceHttpClient;
-            _elasticsearchClient = elasticsearchClient;
+            _elasticSearchClient = elasticSearchClient;
             _applicationPropertyDao = applicationPropertyDao;
             _settings = settings;
             _logger = logger;
@@ -88,7 +88,7 @@ namespace Tinkoff.ISA.AppLayer.Jobs
                 Entities = CreateSearchablePages(response.Results)
             };
             
-            await _elasticsearchClient.UpsertManyAsync(request);
+            await _elasticSearchClient.UpsertManyAsync(request);
             
             LogUploadedBatch(request);
 

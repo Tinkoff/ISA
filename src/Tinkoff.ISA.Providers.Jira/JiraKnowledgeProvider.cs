@@ -48,6 +48,7 @@ namespace Tinkoff.ISA.Providers.Jira
                 
             return issues.Select(issue => new JiraDocument
             {
+                Id = issue.Key.Value,
                 Title = issue.Summary,
                 Text = issue.Description,
                 Link = $"{baseUrl}browse/{issue.Key}"

@@ -4,6 +4,8 @@ namespace Tinkoff.ISA.Providers.Jira
 {
     public class JiraDocument : ISearchableByTitleDocument
     {
+        public string Id { get; set; }
+        
         public string Title { get; set; }
         
         public string Text { get; set; }

@@ -16,12 +16,12 @@ namespace Tinkoff.ISA.DAL.Elasticsearch.Services
         private const string Original = "original";
         private const string Shingles = "shingles";
         
-        private readonly IElasticsearchClient _elasticsearchClient;
-        private readonly IOptions<ElasticsearchSettings> _elasticsearchSettings;
+        private readonly IElasticSearchClient _elasticSearchClient;
+        private readonly IOptions<ElasticSearchSettings> _elasticsearchSettings;
 
-        public ElasticSearchService(IElasticsearchClient elasticsearchClient, IOptions<ElasticsearchSettings> elasticsearchSettings)
+        public ElasticSearchService(IElasticSearchClient elasticSearchClient, IOptions<ElasticSearchSettings> elasticsearchSettings)
         {
-            _elasticsearchClient = elasticsearchClient;
+            _elasticSearchClient = elasticSearchClient;
             _elasticsearchSettings = elasticsearchSettings;
         }
 
@@ -30,7 +30,7 @@ namespace Tinkoff.ISA.DAL.Elasticsearch.Services
         {
             request.SearchParams = GetIndexSearchParams(request.Index);
 
-            return _elasticsearchClient.SearchAsync<TResponse>(request,
+            return _elasticSearchClient.SearchAsync<TResponse>(request,
                 q => q.Bool(s => s
                     .Should(
                         qs => qs.MultiMatch(c => c
@@ -57,7 +57,7 @@ namespace Tinkoff.ISA.DAL.Elasticsearch.Services
         {
             request.SearchParams = GetIndexSearchParams(request.Index);
 
-            return _elasticsearchClient.SearchAsync<TResponse>(request,
+            return _elasticSearchClient.SearchAsync<TResponse>(request,
                 q => q.Bool(s => s
                     .Should(
                         qs => qs.MultiMatch(c => c

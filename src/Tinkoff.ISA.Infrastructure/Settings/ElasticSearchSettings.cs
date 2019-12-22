@@ -2,7 +2,7 @@
 
 namespace Tinkoff.ISA.Infrastructure.Settings
 {
-    public class ElasticsearchSettings
+    public class ElasticSearchSettings
     {
         public string Url { get; set; }
 

@@ -25,7 +25,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
     public class JiraJobTests
     {
         private readonly Mock<IJiraClient> _jiraClientMock;
-        private readonly Mock<IElasticsearchClient> _elasticsearchClientMock;
+        private readonly Mock<IElasticSearchClient> _elasticsearchClientMock;
         private readonly Mock<IApplicationPropertyDao> _applicationPropertyDaoMock;
         private readonly Mock<IOptions<JiraSettings>> _settingsMock;
         private readonly JiraJob _job;
@@ -34,7 +34,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
         public JiraJobTests()
         {
             _applicationPropertyDaoMock = new Mock<IApplicationPropertyDao>();
-            _elasticsearchClientMock = new Mock<IElasticsearchClient>();
+            _elasticsearchClientMock = new Mock<IElasticSearchClient>();
             _jiraClientMock = new Mock<IJiraClient>();
             
             var loggerMock = new Mock<ILogger<JiraJob>>();

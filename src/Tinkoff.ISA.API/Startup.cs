@@ -33,7 +33,7 @@ namespace Tinkoff.ISA.API
         {
             services.Configure<ConnectionStringsSettings>(_configuration.GetSection("ConnectionStrings"));
             services.Configure<SlackSettings>(_configuration.GetSection("SlackSettings"));
-            services.Configure<ElasticsearchSettings>(_configuration.GetSection("ElasticsearchSettings"));
+            services.Configure<ElasticSearchSettings>(_configuration.GetSection("ElasticsearchSettings"));
             services.AddInfrastructureDependencies();
             services.AddDalDependencies();
             services.AddHttpClient<IHttpClient, HttpClientWrapper>();

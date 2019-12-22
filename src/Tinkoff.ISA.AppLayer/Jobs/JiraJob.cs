@@ -19,20 +19,20 @@ namespace Tinkoff.ISA.AppLayer.Jobs
     {
         private readonly ILogger<JiraJob> _logger;
         private readonly IJiraClient _jiraClient;
-        private readonly IElasticsearchClient _elasticsearchClient;
+        private readonly IElasticSearchClient _elasticSearchClient;
         private readonly IApplicationPropertyDao _applicationPropertyDao;
         private readonly IOptions<JiraSettings> _settings;
         private const string TimeFormat = "yyyy/MM/dd HH:mm";
         
         public JiraJob(
             ILogger<JiraJob> logger,
-            IElasticsearchClient elasticsearchClient,
+            IElasticSearchClient elasticSearchClient,
             IApplicationPropertyDao applicationPropertyDao,
             IJiraClient jiraClient,
             IOptions<JiraSettings> settings)
         {
             _logger = logger;
-            _elasticsearchClient = elasticsearchClient;
+            _elasticSearchClient = elasticSearchClient;
             _applicationPropertyDao = applicationPropertyDao;
             _jiraClient = jiraClient;
             _settings = settings;
@@ -48,7 +48,8 @@ namespace Tinkoff.ISA.AppLayer.Jobs
 
             while (!isAllIssuesUpdated)
             {
-                var jiraResponse = await _jiraClient.GetLatestIssuesAsync(_settings.Value.ProjectNames, loadFromDateLocal, _settings.Value.BatchSize, startAt);
+                var jiraResponse = await _jiraClient.GetLatestIssuesAsync(_settings.Value.ProjectNames, loadFromDateLocal,
+                    _settings.Value.BatchSize, startAt);
 
                 await UploadIssuesBatch(jiraResponse);
 
@@ -82,7 +83,7 @@ namespace Tinkoff.ISA.AppLayer.Jobs
                 Entities = CreateUpsertData(jiraResponse)
             };
 
-            await _elasticsearchClient.UpsertManyAsync(elasticRequest);
+            await _elasticSearchClient.UpsertManyAsync(elasticRequest);
 
             var titlesWithIds = jiraResponse.Select(s => $" {s.Summary}-{s.Key}");
             _logger.LogInformation("JiraJob | {BatchUploadDate} | remains to load: {countOfRemaining} | batch loaded: [{uploadedDataIdentifiers}]", 

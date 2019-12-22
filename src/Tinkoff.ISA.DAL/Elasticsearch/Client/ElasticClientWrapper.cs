@@ -10,9 +10,9 @@ namespace Tinkoff.ISA.DAL.Elasticsearch.Client
     {
         private readonly IElasticClient _elasticClient;
 
-        public ElasticClientWrapper(IOptions<ElasticsearchSettings> elasticsearchSettings)
+        public ElasticClientWrapper(IOptions<ElasticSearchSettings> elasticSearchSettings)
         {
-            _elasticClient = new ElasticClient(new Uri(elasticsearchSettings.Value.Url));
+            _elasticClient = new ElasticClient(new Uri(elasticSearchSettings.Value.Url));
         }
 
         public Task<ISearchResponse<T>> SearchAsync<T>(Func<SearchDescriptor<T>, ISearchRequest> func)

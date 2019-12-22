@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tinkoff.ISA.Core\Tinkoff.ISA.Core.csproj" />
     <ProjectReference Include="..\Tinkoff.ISA.Infrastructure\Tinkoff.ISA.Infrastructure.csproj" />
     <ProjectReference Include="..\Tinkoff.ISA.Domain\Tinkoff.ISA.Domain.csproj" />
   </ItemGroup>

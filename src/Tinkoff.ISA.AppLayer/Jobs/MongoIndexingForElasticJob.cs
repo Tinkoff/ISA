@@ -12,18 +12,18 @@ namespace Tinkoff.ISA.AppLayer.Jobs
     public class MongoIndexingForElasticJob : IJob
     {
         private readonly ISearchableTextService _searchableTextService;
-        private readonly IElasticsearchClient _elasticsearchClient;
+        private readonly IElasticSearchClient _elasticSearchClient;
         private readonly IApplicationPropertyDao _applicationPropertyDao;
         private readonly ILogger<MongoIndexingForElasticJob> _logger;
 
         public MongoIndexingForElasticJob(
             ISearchableTextService searchableTextService,
-            IElasticsearchClient elasticsearchClient,
+            IElasticSearchClient elasticSearchClient,
             IApplicationPropertyDao applicationPropertyDao,
             ILogger<MongoIndexingForElasticJob> logger)
         {
             _searchableTextService = searchableTextService;
-            _elasticsearchClient = elasticsearchClient;
+            _elasticSearchClient = elasticSearchClient;
             _applicationPropertyDao = applicationPropertyDao;
             _logger = logger;
         }
@@ -54,7 +54,7 @@ namespace Tinkoff.ISA.AppLayer.Jobs
                 Entities = answers.ToList()
             };
                 
-            await _elasticsearchClient.UpsertManyAsync(request);
+            await _elasticSearchClient.UpsertManyAsync(request);
         }
 
         private async Task IndexQuestions(DateTime startDate)
@@ -72,7 +72,7 @@ namespace Tinkoff.ISA.AppLayer.Jobs
                 Entities = questions.ToList()
             };
                 
-            await _elasticsearchClient.UpsertManyAsync(request);
+            await _elasticSearchClient.UpsertManyAsync(request);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
     public class ConfluenceJobTests
     {
         private readonly Mock<IConfluenceHttpClient> _confluenceHttpClientMock;
-        private readonly Mock<IElasticsearchClient> _elasticsearchClientMock;
+        private readonly Mock<IElasticSearchClient> _elasticsearchClientMock;
         private readonly Mock<IApplicationPropertyDao> _applicationPropertyDaoMock;
         private readonly ConfluenceJob _job;
         private readonly ContentResponse _response;
@@ -29,7 +29,7 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Jobs
         public ConfluenceJobTests()
         {
             _confluenceHttpClientMock = new Mock<IConfluenceHttpClient>();
-            _elasticsearchClientMock = new Mock<IElasticsearchClient>();
+            _elasticsearchClientMock = new Mock<IElasticSearchClient>();
             _applicationPropertyDaoMock = new Mock<IApplicationPropertyDao>();
             var settingsMock = new Mock<IOptions<ConfluenceSettings>>();
             settingsMock

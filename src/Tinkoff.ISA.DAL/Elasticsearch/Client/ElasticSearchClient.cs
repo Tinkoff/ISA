@@ -4,17 +4,18 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Nest;
+using Tinkoff.ISA.Core.Documents;
 using Tinkoff.ISA.DAL.Elasticsearch.Request;
 using Tinkoff.ISA.Domain.Search;
 
 namespace Tinkoff.ISA.DAL.Elasticsearch.Client
 {
-    public class ElasticsearchClient : IElasticsearchClient
+    public class ElasticSearchClient : IElasticSearchClient
     {
         private const string DefaultType = "doc";
         private readonly IElasticClientWrapper _elasticClient;
 
-        public ElasticsearchClient(IElasticClientWrapper elasticClient)
+        public ElasticSearchClient(IElasticClientWrapper elasticClient)
         {
             _elasticClient = elasticClient;
         }
@@ -53,6 +54,20 @@ namespace Tinkoff.ISA.DAL.Elasticsearch.Client
                         .Type(DefaultType)
                         .DocAsUpsert()
                         .Doc(a)));
+        }
+
+        public Task UpsertManyAsyncV2(ElasticUpsertRequestV2 request)
+        {
+            if (string.IsNullOrEmpty(request?.Index)) throw new ArgumentException(nameof(request.Index));
+
+            return _elasticClient.BulkAsync(bd => bd.UpdateMany(
+                request.Entities,
+                (bud, a) => bud
+                    .Id(a.Id)
+                    .Index(request.Index)
+                    .Type(DefaultType)
+                    .DocAsUpsert()
+                    .Doc(a)));
         }
     }
 }

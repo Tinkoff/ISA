@@ -30,10 +30,10 @@ namespace Tinkoff.ISA.AppLayer.UnitTests.Slack
 
         public EventServiceTests()
         {
-            var elasticsearchSettingsMock = new Mock<IOptions<ElasticsearchSettings>>();
+            var elasticsearchSettingsMock = new Mock<IOptions<ElasticSearchSettings>>();
             elasticsearchSettingsMock
                 .SetupGet(m => m.Value)
-                .Returns(() => new ElasticsearchSettings());
+                .Returns(() => new ElasticSearchSettings());
 
             _elasticSearchService = new Mock<IElasticSearchService>();
             _slackClientMock = new Mock<ISlackHttpClient>();

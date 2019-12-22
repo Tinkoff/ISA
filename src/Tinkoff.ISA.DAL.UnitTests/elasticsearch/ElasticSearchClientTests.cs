@@ -18,15 +18,15 @@ namespace Tinkoff.ISA.DAL.UnitTests.elasticsearch
     {
         private const string Text = "test";
         private readonly Mock<IElasticClientWrapper> _elasticClientWrapperMock;
-        private readonly IElasticsearchClient _client;
+        private readonly IElasticSearchClient _client;
         private readonly Mock<ISearchResponse<SearchableQuestion>> _searchResponseMock;
 
         public ElasticSearchClientTests()
         {
-            var elasticSettingsOptionsMock = new Mock<IOptions<ElasticsearchSettings>>();
+            var elasticSettingsOptionsMock = new Mock<IOptions<ElasticSearchSettings>>();
             elasticSettingsOptionsMock
                 .SetupGet(m => m.Value)
-                .Returns(() => new ElasticsearchSettings()
+                .Returns(() => new ElasticSearchSettings()
                 {
                     Url = "http://localhost:9200"
                 });
@@ -48,7 +48,7 @@ namespace Tinkoff.ISA.DAL.UnitTests.elasticsearch
                     It.IsAny<Func<SearchDescriptor<SearchableQuestion>, ISearchRequest>>()))
                 .ReturnsAsync(_searchResponseMock.Object);
 
-            _client = new ElasticsearchClient(_elasticClientWrapperMock.Object);
+            _client = new ElasticSearchClient(_elasticClientWrapperMock.Object);
         }
 
         [Fact]

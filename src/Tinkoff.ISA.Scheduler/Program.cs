@@ -50,7 +50,7 @@ namespace Tinkoff.ISA.Scheduler
                 .Configure<SchedulerSettings>(configuration.GetSection("Scheduler"))
                 .Configure<JiraSettings>(configuration.GetSection("JiraSettings"))
                 .Configure<ConfluenceSettings>(configuration.GetSection("ConfluenceSettings"))
-                .Configure<ElasticsearchSettings>(configuration.GetSection("ElasticsearchSettings"))
+                .Configure<ElasticSearchSettings>(configuration.GetSection("ElasticsearchSettings"))
                 .Configure<ConnectionStringsSettings>(configuration.GetSection("ConnectionStrings"));
             
             services.AddHttpClient<IHttpClient, HttpClientWrapper>();
