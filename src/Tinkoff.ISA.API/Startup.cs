@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using AutoMapper;
 using Hangfire;
-using Hangfire.Common;
 using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tinkoff.ISA.AppLayer;
-using Tinkoff.ISA.AppLayer.Jobs;
 using Tinkoff.ISA.Infrastructure.Settings;
 using Tinkoff.ISA.DAL;
 using Tinkoff.ISA.DAL.Common;
@@ -52,7 +50,7 @@ namespace Tinkoff.ISA.API
 
                 config.UseMongoStorage(
                     mongoContext.MongoClient.Settings,
-                    "Jobs",
+                    "HangfireJobs",
                     new MongoStorageOptions
                     {
                         MigrationOptions = new MongoMigrationOptions
@@ -86,22 +84,6 @@ namespace Tinkoff.ISA.API
             }
 
             app.UseMvc();
-            
-            recurringJobManager.AddOrUpdate<JiraJob>(
-                nameof(JiraJob), 
-                job => job.StartJob(), 
-                Cron.Minutely
-            );
-            recurringJobManager.AddOrUpdate<ConfluenceJob>(
-                nameof(ConfluenceJob), 
-                job => job.StartJob(), 
-                Cron.Minutely
-            );
-            recurringJobManager.AddOrUpdate<MongoIndexingForElasticJob>(
-                nameof(MongoIndexingForElasticJob), 
-                job => job.StartJob(), 
-                Cron.Minutely
-            );
         }
     }
 }

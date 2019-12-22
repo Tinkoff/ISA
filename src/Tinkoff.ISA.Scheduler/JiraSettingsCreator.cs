@@ -11,15 +11,13 @@ namespace Tinkoff.ISA.Scheduler
             const string sectionName = "JiraSettings";
             
             var jiraSection = configuration.GetSection(sectionName);
+            
             if (!jiraSection.Exists())
             {
                 throw new InvalidOperationException($"\"{sectionName}\" section doesn't exist.");
             }
             
-            var settings = new JiraProviderSettings();
-            configuration.Bind(sectionName, settings);
-            
-            return settings;
+            return jiraSection.Get<JiraProviderSettings>();
         }
     }
 }

@@ -6,7 +6,7 @@ using Hangfire;
 using Hangfire.Server;
 using Microsoft.Extensions.Hosting;
 
-namespace Tinkoff.ISA.Scheduler
+namespace Tinkoff.ISA.Scheduler.Jobs
 {
     public class HangfireService : IHostedService
     {

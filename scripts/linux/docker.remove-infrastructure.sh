@@ -1,0 +1,1 @@
+docker rm -vf tinkoff-isa-elasticsearch tinkoff-isa-mongo

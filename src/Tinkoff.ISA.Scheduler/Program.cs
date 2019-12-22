@@ -8,11 +8,12 @@ using Serilog;
 using Tinkoff.ISA.AppLayer;
 using Tinkoff.ISA.AppLayer.Jobs;
 using Tinkoff.ISA.DAL;
-using Tinkoff.ISA.DAL.Common;
 using Tinkoff.ISA.Infrastructure.Configuration;
 using Tinkoff.ISA.Infrastructure.Extensions;
 using Tinkoff.ISA.Infrastructure.MongoDb;
 using Tinkoff.ISA.Infrastructure.Settings;
+using Tinkoff.ISA.Providers.Jira;
+using Tinkoff.ISA.Scheduler.Jobs;
 
 namespace Tinkoff.ISA.Scheduler
 {
@@ -32,6 +33,8 @@ namespace Tinkoff.ISA.Scheduler
                 {
                     var configuration = context.Configuration;
 
+                    var jiraProviderSettings = JiraSettingsCreator.CreateProviderSettings(configuration);
+
                     services
                         .AddHangfire((serviceProvider, config) =>
                         {
@@ -40,7 +43,7 @@ namespace Tinkoff.ISA.Scheduler
 
                             config.UseMongoStorage(
                                 mongoContext.MongoClient.Settings,
-                                "Jobs",
+                                "HangfireJobs",
                                 new MongoStorageOptions
                                 {
                                     MigrationOptions = new MongoMigrationOptions
@@ -50,6 +53,7 @@ namespace Tinkoff.ISA.Scheduler
                                     }
                                 });
                         })
+                        .AddJiraProvider(jiraProviderSettings)
                         .AddSingleton<IHostedService, HangfireService>()
                         .AddAppDependencies()
                         .AddDalDependencies()
@@ -74,6 +78,8 @@ namespace Tinkoff.ISA.Scheduler
                 .UseConsoleLifetime()
                 .Build();
 
+            host.Services.AddJobs();
+            
             return host.RunAsync();
         }
     }
