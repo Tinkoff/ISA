@@ -35,7 +35,7 @@ namespace Tinkoff.ISA.Scheduler.Schedule
             }
             catch (Exception e)
             {
-                _logger.LogError("Scheduler exited with error: {exception}", e.Message);
+                _logger.LogError(e, "Scheduler exited with error: {exception}");
             }
         }
 
