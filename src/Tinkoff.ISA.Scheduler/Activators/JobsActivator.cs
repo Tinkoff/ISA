@@ -51,7 +51,7 @@ namespace Tinkoff.ISA.Scheduler.Activators
                     }
                     catch (Exception e)
                     {
-                        _logger.LogWarning("{JobName} exited with error: {exception}", jobType.Name, e.Message);
+                        _logger.LogWarning(e, "{JobName} exited with error", jobType.Name);
                         await Task.Delay(_settings.Value.RestartJobDelayMilliseconds);
                         _logger.LogInformation("{JobName} relaunch attempt № {tryNumber}", jobType.Name, i + 1);
                     }
