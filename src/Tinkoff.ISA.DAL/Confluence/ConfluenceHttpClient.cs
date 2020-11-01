@@ -87,8 +87,8 @@ namespace Tinkoff.ISA.DAL.Confluence
         {
             var date = startDate.ToString(CqlQueryDateFormat, CultureInfo.InvariantCulture);
             var cqlQuery =
-                $"((lastModified >= \"{date}\" or created >= \"{date}\") and type=page " +
-                $"and space.key in ({string.Join(", ", spaceKeys)})) order by created asc, lastModified asc";
+                $"(lastModified >= \"{date}\" and type=page " +
+                $"and space.key in ({string.Join(", ", spaceKeys)})) order by lastModified asc";
 
             var parameters = new Dictionary<string, string>
             {
